@@ -19,13 +19,14 @@ pipeline {
                  sh 'npm run build'
              }
          }
-         stage('uploadtos3') {
+        
+                 stage('uploadtos3') {
              steps {
-                  withAWS(region:'us-east-2',credentials:'65dd70a6-b5b1-4d13-8c0c-e66ab8f02671') {
-                      sh 'cd /var/lib/jenkins/workspace/t2medium'
-                 
-                sh 'aws s3 sync build/ s3://reactjs-212'
-             }
+                 withAWS(region:'us-east-2',credentials:'') {
+               
+                
+                s3Upload(bucket: "s3uploadartifact", includePathPattern: "build/**")
+         }
          }
          }
         
